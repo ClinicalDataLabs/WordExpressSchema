@@ -15,13 +15,6 @@ const Definitions = `
     children: [MenuItem]
   }
 
-  enum MetaType {
-    thumbnailID
-    attachedFile
-    reactLayout
-    amazonInfo
-  }
-
   type PageInfo {
     hasNextPage: Boolean!
     hasPreviousPage: Boolean!
@@ -48,7 +41,7 @@ const Definitions = `
     menu_order: Int
     layout: Postmeta
     thumbnail: String
-    post_meta(keys: [MetaType], after: String, first: Int, before: String, last: Int): Postmeta
+    post_meta(keys: [String], after: String, first: Int, before: String, last: Int): [Postmeta]
   }
 
   type Postmeta {

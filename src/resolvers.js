@@ -32,7 +32,7 @@ export default function WordExpressResolvers(Connectors, publicSettings) {
       layout(post) {
         return Connectors.getPostLayout(post.id);
       },
-      post_meta(post, keys) {
+      post_meta(post, {keys}) {
         return Connectors.getPostmeta(post.id, keys);
       },
       thumbnail(post) {
