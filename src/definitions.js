@@ -26,6 +26,7 @@ const Definitions = `
     term_id: Int!
     name: String
     slug: String
+    subcategories: [Category]
     posts(post_type: String = "post", limit: Int, skip: Int): [Post]
   }
 
@@ -64,6 +65,7 @@ const Definitions = `
     menus(name: String): Menu
     post(name: String, id: Int): Post
     category(term_id: Int): Category
+    categories: [Category]
     postmeta(post_id: Int, after: String, first: Int, before: String, last: Int): Postmeta
   }
 

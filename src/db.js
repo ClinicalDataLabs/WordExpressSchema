@@ -77,7 +77,7 @@ export default class WordExpressDatabase {
 
   getConnectors() {
     const { amazonS3, uploads } = this.settings.publicSettings;
-    const { Post, Postmeta, Terms, TermRelationships } = this.getModels();
+    const { Post, Postmeta, Terms, TermRelationships, TermTaxonomy } = this.getModels();
 
     Terms.hasMany(TermRelationships,  {foreignKey: 'term_taxonomy_id'});
     TermRelationships.belongsTo(Terms, {foreignKey: 'term_taxonomy_id'});
@@ -89,6 +89,8 @@ export default class WordExpressDatabase {
 
     Post.hasMany(Postmeta, {foreignKey: 'post_id'});
     Postmeta.belongsTo(Post, {foreignKey: 'post_id'});
+
+    TermTaxonomy.belongsTo(Terms, {foreignKey: 'term_id'});
 
     return {
 
@@ -128,6 +130,25 @@ export default class WordExpressDatabase {
       getCategoryById(term_id) {
         return Terms.findOne({
           where: { term_id }
+        });
+      },
+
+      getTopLevelCategories() {
+        return getCategories(0);
+      },
+
+      getCategories(parent) {
+        let where = {
+          taxonomy: 'category'
+        }
+        if (parent) {
+          where.parent = parent
+        }
+        return TermTaxonomy.findAll({
+          where: where,
+          include: [{model: Terms}]
+        }).then(termTaxonomies => {
+          return termTaxonomies.map(termTaxonomy => termTaxonomy.wp_term);
         });
       },
 
