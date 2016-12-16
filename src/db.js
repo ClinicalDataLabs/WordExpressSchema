@@ -133,10 +133,6 @@ export default class WordExpressDatabase {
         });
       },
 
-      getTopLevelCategories() {
-        return getCategories(0);
-      },
-
       getCategories(parent) {
         let where = {
           taxonomy: 'category'
