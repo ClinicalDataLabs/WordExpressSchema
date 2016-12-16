@@ -137,9 +137,10 @@ export default class WordExpressDatabase {
         let where = {
           taxonomy: 'category'
         }
-        if (parent) {
+        if (parent !== undefined) {
           where.parent = parent
         }
+        console.log({PARENT: parent});
         return TermTaxonomy.findAll({
           where: where,
           include: [{model: Terms}]
